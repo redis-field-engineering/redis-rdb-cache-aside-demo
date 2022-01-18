@@ -1,0 +1,44 @@
+<configuration debug="true" scan="true" scanPeriod="15 seconds">
+
+    <property name="LOG_PATH" value="logs/redis-rdb-cache-aside-demo.log"/>
+
+    <appender name="CACHE_ASIDE_DEMO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/redis-rdb-cache-aside-demo.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="cache-aside-demo" level="INFO" additivity="false">
+        <appender-ref ref="CACHE_ASIDE_DEMO"/>
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="io.netty" level="OFF" additivity="false">
+        <appender-ref ref="CACHE_ASIDE_DEMO"/>
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    <logger name="io.lettuce" level="OFF" additivity="false">
+        <appender-ref ref="CACHE_ASIDE_DEMO"/>
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <root>
+        <appender-ref ref="CACHE_ASIDE_DEMO"/>
+    </root>
+
+</configuration>
