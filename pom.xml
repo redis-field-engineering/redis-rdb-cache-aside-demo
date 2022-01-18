@@ -7,8 +7,8 @@
     <groupId>com.redis.caching</groupId>
     <artifactId>redis-rdb-cache-aside-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Redis Enterprise Cache Aside Demo</name>
-    <description>Cache Aside with Redis Enterprise and RDBMS TestContainers</description>
+    <name>Redis Enterprise Cache-Aside Demo</name>
+    <description>Cache-Aside with Redis Enterprise and RDBMS TestContainers</description>
     <url>https://github.com/redis-field-engineering/redis-rdb-cache-aside-demo</url>
     <inceptionYear>2022</inceptionYear>
 

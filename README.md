@@ -1,8 +1,8 @@
 # redis-rdb-cache-aside-demo
-Cache Aside caching with [Redis Enterprise](https://redis.com/redis-enterprise-software/overview/) and RDBMS [TestContainers](https://www.testcontainers.org/)
+[Cache-Aside](https://redis.com/solutions/use-cases/caching/#:~:text=Cache%2Daside%20(Lazy%2Dloading)) caching with [Redis Enterprise](https://redis.com/redis-enterprise-software/overview/) and RDBMS [TestContainers](https://www.testcontainers.org/)
 
 ## Overview
-A demo project to showcase Cache Aside caching pattern using Redis Enterprise TestContainer and few popular RDBMS. Currently, this project is built with MSSQL, MySQL, Oracle (using pre-built 12c and 19c docker images) and Postgres TestContainers.
+A demo project to showcase Cache-Aside caching pattern using Redis Enterprise TestContainer and few popular RDBMS. Currently, this project is built with MSSQL, MySQL, Oracle (using pre-built 12c and 19c docker images) and Postgres TestContainers.
 
 ## Prerequisites
 * [Git](https://git-scm.com/) 2.2.1 or later
