@@ -29,7 +29,7 @@ public class MSSQLTest extends AbstractMSSQLTest {
     }
 
     private StatefulRedisConnection<String, String> getRedisConnection() {
-        return RedisClient.create(redisContainer.getRedisURI()).connect();
+        return RedisClient.create(redisEnterpriseContainer.getRedisURI()).connect();
     }
 
     @BeforeAll
@@ -37,8 +37,8 @@ public class MSSQLTest extends AbstractMSSQLTest {
         LOGGER.info("Instance: {} Running beforeAll", instanceId);
         // Start Redis Enterprise container
         LOGGER.info("Instance: {} Starting Redis Image: {}", instanceId, redisImageName);
-        redisContainer.start();
-        LOGGER.info("Instance: {} {} container is running now", instanceId, redisContainer.getContainerName());
+        redisEnterpriseContainer.start();
+        LOGGER.info("Instance: {} {} container is running now", instanceId, redisEnterpriseContainer.getContainerName());
 
         // Start and setup MSSQL container
         LOGGER.info("Instance: {} Starting MSSQL Image: {}", instanceId, rdbImageName);
@@ -128,7 +128,7 @@ public class MSSQLTest extends AbstractMSSQLTest {
         if (record.isEmpty()) {
             LOGGER.info("Instance: {} Employee 1 not found in Redis", instanceId);
 
-            long pgStartTime = System.currentTimeMillis();
+            long rdbStartTime = System.currentTimeMillis();
             try (Connection mssqlConnection = getMSSQLConnection()) {
                 Statement statement = mssqlConnection.createStatement();
                 statement.execute("SELECT * FROM RedisConnect.dbo.emp");
@@ -146,7 +146,7 @@ public class MSSQLTest extends AbstractMSSQLTest {
                     values.put("dept", String.valueOf(resultSet.getInt(9)));
 
                     LOGGER.info("Instance: {} Employee {} found in MSSQL", instanceId, empno);
-                    LOGGER.info("Instance: {} MSSQL Query time: {} ms", instanceId, System.currentTimeMillis() - pgStartTime);
+                    LOGGER.info("Instance: {} MSSQL Query time: {} ms", instanceId, System.currentTimeMillis() - rdbStartTime);
 
                     long redisStartTime = System.currentTimeMillis();
                     LOGGER.info("Instance: {} Caching Employee {} in Redis", instanceId, empno);

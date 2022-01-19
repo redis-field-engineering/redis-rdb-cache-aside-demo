@@ -39,13 +39,6 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone -->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-console-standalone</artifactId>
-            <version>1.8.2</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
@@ -59,15 +52,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.redis</groupId>
-            <artifactId>lettucemod</artifactId>
-            <version>1.8.1</version>
+            <groupId>com.redis.testcontainers</groupId>
+            <artifactId>testcontainers-redis-junit</artifactId>
+            <version>1.5.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.redis.testcontainers</groupId>
-            <artifactId>testcontainers-redis-junit-jupiter</artifactId>
-            <version>1.4.6</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>

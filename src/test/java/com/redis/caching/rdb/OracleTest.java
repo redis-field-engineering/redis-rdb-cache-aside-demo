@@ -33,7 +33,7 @@ public class OracleTest extends AbstractOracleTest {
     }
 
     private StatefulRedisConnection<String, String> getRedisConnection() {
-        return RedisClient.create(redisContainer.getRedisURI()).connect();
+        return RedisClient.create(redisEnterpriseContainer.getRedisURI()).connect();
     }
 
     @BeforeAll
@@ -41,8 +41,8 @@ public class OracleTest extends AbstractOracleTest {
         LOGGER.info("Instance: {} Running beforeAll", instanceId);
         // Start Redis Enterprise container
         LOGGER.info("Instance: {} Starting Redis Image: {}", instanceId, redisImageName);
-        redisContainer.start();
-        LOGGER.info("Instance: {} {} container is running now", instanceId, redisContainer.getContainerName());
+        redisEnterpriseContainer.start();
+        LOGGER.info("Instance: {} {} container is running now", instanceId, redisEnterpriseContainer.getContainerName());
 
         // Start and setup Oracle container
         LOGGER.info("Instance: {} Starting Oracle Image: {}", instanceId, rdbImageName);
@@ -144,7 +144,7 @@ public class OracleTest extends AbstractOracleTest {
             oracleContainer.withDatabaseName("ORCLPDB1");
             oracleContainer.withUsername("hr");
             oracleContainer.withPassword("hr");
-            long oraStartTime = System.currentTimeMillis();
+            long rdbStartTime = System.currentTimeMillis();
             try (Connection connection = oracleContainer.createConnection("")) {
                 Statement statement = connection.createStatement();
                 statement.execute("SELECT * FROM hr.emp");
@@ -162,7 +162,7 @@ public class OracleTest extends AbstractOracleTest {
                     values.put("dept", String.valueOf(resultSet.getInt(9)));
 
                     LOGGER.info("Instance: {} Employee {} found in Oracle", instanceId, empno);
-                    LOGGER.info("Instance: {} Oracle Query time: {} ms", instanceId, System.currentTimeMillis() - oraStartTime);
+                    LOGGER.info("Instance: {} Oracle Query time: {} ms", instanceId, System.currentTimeMillis() - rdbStartTime);
 
                     long redisStartTime = System.currentTimeMillis();
                     LOGGER.info("Instance: {} Caching Employee {} in Redis", instanceId, empno);

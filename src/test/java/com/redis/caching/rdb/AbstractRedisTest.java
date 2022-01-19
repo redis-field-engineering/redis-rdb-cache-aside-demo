@@ -14,10 +14,10 @@ public abstract class AbstractRedisTest {
     static final String redisImageName = System.getProperty(REDIS_IMAGE_NAME, "redislabs/redis:latest");
     static final DockerImageName redisImage = DockerImageName.parse(redisImageName);
 
-    protected static final RedisEnterpriseContainer redisContainer;
+    protected static final RedisEnterpriseContainer redisEnterpriseContainer;
 
     static {
-        redisContainer = new RedisEnterpriseContainer(redisImage)
+        redisEnterpriseContainer = new RedisEnterpriseContainer(redisImage)
                 .withNetwork(redis)
                 .withNetworkAliases("redis")
                 .withCreateContainerCmdModifier(CreateContainerCmd::getHostConfig)
