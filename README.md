@@ -157,7 +157,7 @@ mvn -Dtest=OracleTest clean test
 ```
 Or with images of your choice
 ```bash
-mvn -Dtest=OracleTest -Dredis.image.name=redislabs/redis:6.2.8-50 -Doracle.image.name=virag/oracle-19.3.0.0.1-ee:latest clean test
+mvn -Dtest=OracleTest -Dredis.image.name=redislabs/redis:latest -Doracle.image.name=virag/oracle-19.3.0-ee:latest clean test
 ```
 <details><summary>Expected Output:</summary>
 <p>
