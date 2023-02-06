@@ -3,7 +3,7 @@ package com.redis.caching.testcontainers;
 import org.jetbrains.annotations.NotNull;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
-import org.testcontainers.shaded.org.apache.commons.lang.StringUtils;
+import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
