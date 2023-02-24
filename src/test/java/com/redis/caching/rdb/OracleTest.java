@@ -45,15 +45,15 @@ public class OracleTest extends AbstractOracleTest {
         LOGGER.info("Instance: {} {} container is running now", instanceId, redisEnterpriseContainer.getContainerName());
 
         // Start and setup Oracle container
-        LOGGER.info("Instance: {} Starting Oracle Image: {}", instanceId, rdbImageName);
-        oracleContainer.start();
-        oracleContainer.waitUntilContainerStarted();
-        LOGGER.info("Instance: {} {} container is running now", instanceId, oracleContainer.getContainerName());
-
         Path path = Paths.get(recoveryPath);
         if (!Files.exists(path)) {
             createDirectory(recoveryPath);
         }
+
+        LOGGER.info("Instance: {} Starting Oracle Image: {}", instanceId, rdbImageName);
+        oracleContainer.start();
+        oracleContainer.waitUntilContainerStarted();
+        LOGGER.info("Instance: {} {} container is running now", instanceId, oracleContainer.getContainerName());
 
         LOGGER.info("Instance: {} {} is running now", instanceId, oracleContainer.getContainerName());
     }
