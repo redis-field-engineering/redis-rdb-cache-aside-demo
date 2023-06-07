@@ -2,20 +2,29 @@ package com.redis.caching.rdb;
 
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.management.ManagementFactory;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MSSQLTest extends AbstractMSSQLTest {
@@ -28,8 +37,12 @@ public class MSSQLTest extends AbstractMSSQLTest {
                 mssqlContainer.getPassword());
     }
 
-    private StatefulRedisConnection<String, String> getRedisConnection() {
-        return RedisClient.create(redisEnterpriseContainer.getRedisURI()).connect();
+    private static StatefulRedisConnection<String, String> getRedisConnection() {
+        StatefulRedisConnection<String, String> redisConnection;
+        try (RedisClient redisClient = RedisClient.create(redisEnterpriseContainer.getRedisURI())) {
+            redisConnection = redisClient.connect();
+        }
+        return redisConnection;
     }
 
     @BeforeAll

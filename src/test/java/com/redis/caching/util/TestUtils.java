@@ -1,13 +1,12 @@
 package com.redis.caching.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
 
 public class TestUtils {
 

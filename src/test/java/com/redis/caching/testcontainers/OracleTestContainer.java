@@ -1,15 +1,18 @@
 package com.redis.caching.testcontainers;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.Future;
+import java.util.List;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
 import org.testcontainers.utility.DockerImageName;
-
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.concurrent.Future;
 
 public class OracleTestContainer extends JdbcDatabaseContainer<OracleTestContainer> {
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("virag/oracle-12.2.0.1-ee:latest");

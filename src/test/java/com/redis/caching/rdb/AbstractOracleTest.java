@@ -2,9 +2,8 @@ package com.redis.caching.rdb;
 
 import com.redis.caching.testcontainers.OracleTestContainer;
 import com.redis.caching.util.TestUtils;
-import org.testcontainers.utility.DockerImageName;
-
 import java.io.File;
+import org.testcontainers.utility.DockerImageName;
 
 public abstract class AbstractOracleTest extends AbstractRedisTest {
 

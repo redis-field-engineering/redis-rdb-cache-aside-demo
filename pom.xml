@@ -35,7 +35,13 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testcontainers.version>1.17.2</testcontainers.version>
+        <testcontainers.version>1.18.0</testcontainers.version>
+        <!--
+        By default, Connectors Integration Tests are not executed but only compiled.
+        In order to execute tests, the profile "oracle-tests" must be explicitly toggled.
+        -->
+        <skipITs>true</skipITs>
+        <runOrder>1</runOrder>
     </properties>
 
     <dependencies>
@@ -54,13 +60,13 @@
         <dependency>
             <groupId>com.redis.testcontainers</groupId>
             <artifactId>testcontainers-redis-junit</artifactId>
-            <version>1.6.3</version>
+            <version>1.6.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
+            <version>2.15.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -72,7 +78,7 @@
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
-            <version>21.8.0.0</version>
+            <version>21.9.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -84,7 +90,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.5.3</version>
+            <version>42.5.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -96,7 +102,7 @@
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>10.2.1.jre8</version>
+            <version>12.2.0.jre8</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -112,26 +118,91 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>23.1.0</version>
+            <version>24.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M8</version>
-            </plugin>
-        </plugins>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*</include>
+                    <include>**/*</include>
+                </includes>
+            </testResource>
+        </testResources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skipTests>${skipITs}</skipTests>
+                        <enableAssertions>true</enableAssertions>
+                        <forkCount>1</forkCount>
+                        <!--
+                        <systemPropertyVariables>
+                            <database.connection.adapter>${adapter.name}</database.connection.adapter>
+                            <log.mining.buffer.type>${log.mining.buffer.type.name}</log.mining.buffer.type>
+                            <internal.log.mining.read.only>${log.mining.read.only.mode}</internal.log.mining.read.only>
+                        </systemPropertyVariables>
+                        -->
+                        <runOrder>${runOrder}</runOrder>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
+    <profiles>
+        <!--
+        Profile: oracle-tests
+        This specifically enables the execution of all integration tests.
+        By default, integration tests are only compiled but are not executed.
+        -->
+        <profile>
+            <id>oracle-tests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
+        </profile>
+    </profiles>
 </project>

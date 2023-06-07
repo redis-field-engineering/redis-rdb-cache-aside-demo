@@ -1,11 +1,10 @@
 package com.redis.caching.rdb;
 
+import java.time.Duration;
 import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.containers.startupcheck.MinimumDurationRunningStartupCheckStrategy;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
-
-import java.time.Duration;
 
 public abstract class AbstractMSSQLTest extends AbstractRedisTest {
 
